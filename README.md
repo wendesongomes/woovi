@@ -6,3 +6,20 @@
 - [x] Mobile First
 - [x] you can use an UI lib. We prefer the MUI because is the one we use inside Woovi
 - [x] Think in all edges cases
+
+# Dependencies
+
+-   `npm`
+-   `typescript`
+-   `tailwindcss`
+-   `@emotion/react`
+-   `@emotion/styled`
+-   `@hookform/resolvers`
+-   `@mui/base`
+-   `@mui/icons-material`
+-   `@mui/material`
+-   `next`
+-   `React`
+-   `react-dom`
+-   `react-hook-form`
+-   `zod`
