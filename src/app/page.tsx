@@ -1,113 +1,155 @@
+"use client";
+
+import { parcelas } from "@/lib/parcelas";
+import {
+  ArrowCircleRight,
+  CheckCircle,
+  RadioButtonUnchecked,
+} from "@mui/icons-material";
+import { Checkbox } from "@mui/material";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function Home() {
+  const [selectedParcela, setSelectedParcela] = useState(1);
+  const router = useRouter();
+
+  const handleCheckboxChange = (parcela: number) => {
+    setSelectedParcela(parcela === selectedParcela ? 1 : parcela);
+  };
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
+    <div className="w-screen h-screen flex flex-col items-center px-5 overflow-x-hidden">
+      <Image
+        src={"/logo.svg"}
+        alt="logo"
+        width={100}
+        height={100}
+        className="mt-9"
+      />
+
+      <p className="font-extrabold text-2xl mt-10 text-dak mb-8">
+        João, como você quer pagar?
+      </p>
+
+      {parcelas.slice(0, 1).map(({ parcela, valor }) => (
+        <div
+          key={parcela}
+          className={`max-w-[429px] w-full rounded-[10px] border-2 flex flex-col px-[21px] pb-[23px] before:content-['Pix'] before:relative before:text-dak before:bottom-3 before:w-max before:bg-soft-gray before:font-extrabold before:leading-6 before:rounded-full before:px-5 before:text-center ${
+            parcela === selectedParcela
+              ? "border-mint-green"
+              : "border-pale-gray"
+          }`}
+        >
+          <div className="flex justify-between">
+            <p className="font-extrabold text-2xl text-dak leading-8">
+              {parcela}x{" "}
+              <span className="font-semibold">
+                R${" "}
+                {Intl.NumberFormat("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                }).format(valor)}
+              </span>
+            </p>
+
+            <Checkbox
+              name="parcela"
+              checked={selectedParcela === parcela}
+              onChange={() => handleCheckboxChange(parcela)}
+              icon={<RadioButtonUnchecked className="text-soft-gray" />}
+              checkedIcon={<CheckCircle className="text-mint-green" />}
             />
-          </a>
+          </div>
+          <p className="text-mint-green leading-5 font-semibold mb-2">
+            Ganhe <span className="font-extrabold">3%</span> de Cashback
+          </p>
+          <div className="bg-deep-blue rounded flex justify-between items-center">
+            <p className="font-semibold leading-5 text-white p-2">
+              🤑 <span className="font-extrabold">R$ 300,00</span> de volta no
+              seu Pix na hora
+            </p>
+            <span className="[clip-path:polygon(0%_50%,100%_0%,100%_100%)] bg-white size-7 relative left-1" />
+          </div>
         </div>
+      ))}
+
+      <div className="max-w-[429px] w-full flex flex-col mt-3 before:content-['Pix_Parcelado'] before:relative before:text-dak before:top-3 before:left-4 before:w-max before:bg-soft-gray before:font-extrabold before:leading-6 before:rounded-full before:px-5 before:text-center">
+        {parcelas.slice(1).map(({ parcela, valor, total, melhorOpcao }) => (
+          <div
+            key={parcela}
+            className={`px-[21px] py-5 first:border-t-2 border-y-2 last:border-b-2 border-x-2 first:rounded-t-[10px] last:rounded-b-[10px] ${
+              parcela === selectedParcela
+                ? "border-mint-green border-b-2"
+                : "border-soft-gray border-b-0"
+            }`}
+          >
+            <div className="flex justify-between">
+              <p className="font-extrabold text-2xl text-dak leading-8">
+                {parcela}x{" "}
+                <span className="font-semibold">
+                  {Intl.NumberFormat("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                  }).format(valor)}
+                </span>
+              </p>
+
+              <Checkbox
+                name="parcela"
+                checked={selectedParcela === parcela}
+                onChange={() => handleCheckboxChange(parcela)}
+                icon={<RadioButtonUnchecked className="text-soft-gray" />}
+                checkedIcon={<CheckCircle className="text-mint-green" />}
+              />
+            </div>
+            <p className="text-lighter-gray leading-5 font-semibold">
+              total: R${" "}
+              {Intl.NumberFormat("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+              }).format(total)}
+            </p>
+            {melhorOpcao && (
+              <div className="bg-deep-blue rounded mt-2 flex justify-between items-center">
+                <p className="font-extrabold leading-5 text-white p-2">
+                  -3% de juros:{" "}
+                  <span className="font-semibold">
+                    Melhor opção de parcelamento
+                  </span>
+                </p>
+                <span className="[clip-path:polygon(0%_50%,100%_0%,100%_100%)] bg-white size-7 relative left-1" />
+              </div>
+            )}
+          </div>
+        ))}
       </div>
 
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
+      <footer className="flex gap-2 justify-center items-center mt-10 mb-7">
         <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
+          src={"/shield.svg"}
+          alt="Ícone de segurança"
+          width={20}
+          height={20}
         />
-      </div>
+        <p className="text-sm leading-4 font-semibold text-light-gray">
+          Pagamento 100% seguro via:
+        </p>
+        <Image
+          src={"/footer_logo.svg"}
+          alt="Ícone de segurança"
+          width={60}
+          height={60}
+        />
+      </footer>
 
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+      <button
+        onClick={() => router.push("/qrcode")}
+        className="absolute bottom-5 right-5 cursor-pointer"
+      >
+        <ArrowCircleRight className="size-10 text-mint-green" />
+      </button>
+    </div>
   );
 }
