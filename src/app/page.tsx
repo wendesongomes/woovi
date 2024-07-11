@@ -36,7 +36,8 @@ export default function Home() {
       {parcelas.slice(0, 1).map(({ parcela, valor }) => (
         <div
           key={parcela}
-          className={`max-w-[429px] w-full rounded-[10px] border-2 flex flex-col px-[21px] pb-[23px] before:content-['Pix'] before:relative before:text-dak before:bottom-3 before:w-max before:bg-soft-gray before:font-extrabold before:leading-6 before:rounded-full before:px-5 before:text-center ${
+          onClick={() => setSelectedParcela(parcela)}
+          className={`max-w-[429px] cursor-pointer w-full rounded-[10px] border-2 flex flex-col px-[21px] pb-[23px] before:content-['Pix'] before:relative before:text-dak before:bottom-3 before:w-max before:bg-soft-gray before:font-extrabold before:leading-6 before:rounded-full before:px-5 before:text-center ${
             parcela === selectedParcela
               ? "border-mint-green"
               : "border-pale-gray"
@@ -78,8 +79,9 @@ export default function Home() {
       <div className="max-w-[429px] w-full flex flex-col mt-3 before:content-['Pix_Parcelado'] before:relative before:text-dak before:top-3 before:left-4 before:w-max before:bg-soft-gray before:font-extrabold before:leading-6 before:rounded-full before:px-5 before:text-center">
         {parcelas.slice(1).map(({ parcela, valor, total, melhorOpcao }) => (
           <div
+            onClick={() => setSelectedParcela(parcela)}
             key={parcela}
-            className={`px-[21px] py-5 first:border-t-2 border-y-2 last:border-b-2 border-x-2 first:rounded-t-[10px] last:rounded-b-[10px] ${
+            className={`px-[21px] py-5 first:border-t-2 border-y-2 cursor-pointer last:border-b-2 border-x-2 first:rounded-t-[10px] last:rounded-b-[10px] ${
               parcela === selectedParcela
                 ? "border-mint-green border-b-2"
                 : "border-soft-gray border-b-0"
