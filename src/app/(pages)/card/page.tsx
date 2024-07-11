@@ -178,7 +178,7 @@ export default function Card() {
           <div className="w-full flex justify-between items-center font-semibold leading-6 text-dark-gray py-5">
             <p className="text-sm">CET: 0,5%</p>
             <p className="text-lg">
-              Total: {price(installments[Number(installmentParams)].total)}
+              Total: {price(installments[Number(installmentParams) - 1].total)}
             </p>
           </div>
 
