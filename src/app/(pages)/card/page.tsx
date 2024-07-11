@@ -41,12 +41,11 @@ export default function Card() {
 
   const params = useSearchParams();
   const installmentParams = params.get("installment");
+  const installmentNumber = Number(installmentParams);
 
-  if (!installmentParams) {
+  if (installments[installmentNumber] === undefined) {
     redirect("/");
   }
-
-  const installmentNumber = Number(installmentParams);
 
   const onSubmit = (data: formData) => {
     console.log(data);

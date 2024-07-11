@@ -13,11 +13,11 @@ export default function Qrcode() {
   const params = useSearchParams();
   const installmentParams = params.get("installment");
 
-  if (!installmentParams) {
+  const installmentNumber = Number(installmentParams);
+
+  if (installments[installmentNumber] === undefined) {
     redirect("/");
   }
-
-  const installmentNumber = Number(installmentParams);
 
   return (
     <div className="flex flex-col items-center px-5">
