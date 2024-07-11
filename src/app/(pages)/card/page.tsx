@@ -1,6 +1,6 @@
 "use client";
 
-import { parcelas } from "@/lib/parcelas";
+import { installments } from "@/lib/installments";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Check, KeyboardArrowDown } from "@mui/icons-material";
 import {
@@ -119,10 +119,10 @@ export default function Card() {
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               label="parcelas"
-              defaultValue={parcelas[1].valor}
+              defaultValue={installments[1].valor}
               {...register("valor")}
             >
-              {parcelas.slice(1).map(({ parcela, valor }) => (
+              {installments.slice(1).map(({ parcela, valor }) => (
                 <MenuItem key={parcela} value={valor}>
                   {parcela - 1}x de R${" "}
                   {Intl.NumberFormat("pt-BR", {

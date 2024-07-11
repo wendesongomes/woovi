@@ -1,4 +1,4 @@
-export const parcelas = [
+export const installments = [
   {
     parcela: 1,
     valor: 30500,
@@ -18,7 +18,6 @@ export const parcelas = [
     parcela: 4,
     valor: 7725,
     total: 30900,
-    melhorOpcao: true,
   },
   {
     parcela: 5,
