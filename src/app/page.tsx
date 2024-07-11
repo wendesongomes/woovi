@@ -39,7 +39,7 @@ export default function Home() {
           onClick={() => setSelectedParcela(parcela)}
           className={`max-w-[429px] cursor-pointer w-full rounded-[10px] border-2 flex flex-col px-[21px] pb-[23px] before:content-['Pix'] before:relative before:text-dak before:bottom-3 before:w-max before:bg-soft-gray before:font-extrabold before:leading-6 before:rounded-full before:px-5 before:text-center ${
             parcela === selectedParcela
-              ? "border-mint-green"
+              ? "border-mint-green bg-mint-green/5"
               : "border-pale-gray"
           }`}
         >
@@ -83,9 +83,16 @@ export default function Home() {
             key={parcela}
             className={`px-[21px] py-5 first:border-t-2 border-y-2 cursor-pointer last:border-b-2 border-x-2 first:rounded-t-[10px] last:rounded-b-[10px] ${
               parcela === selectedParcela
-                ? "border-mint-green border-b-2"
-                : "border-soft-gray border-b-0"
-            }`}
+                ? "border-mint-green bg-mint-green/5 border-b-2"
+                : "border-soft-gray border-t-0"
+            } 
+              ${
+                parcela > selectedParcela
+                  ? "border-t-0"
+                  : "border-b-0 border-t-2"
+              }
+                
+            `}
           >
             <div className="flex justify-between">
               <p className="font-extrabold text-2xl text-dak leading-8">
