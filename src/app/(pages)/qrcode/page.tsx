@@ -109,12 +109,14 @@ export default function Qrcode() {
         </div>
       </div>
 
-      <button
-        onClick={() => router.push(`/card?installment=${installmentParams}`)}
-        className="fixed bottom-5 right-5 cursor-pointer"
-      >
-        <ArrowCircleRight className="size-10 text-mint-green" />
-      </button>
+      {installmentNumber > 1 && (
+        <button
+          onClick={() => router.push(`/card?installment=${installmentParams}`)}
+          className="fixed bottom-5 right-5 cursor-pointer"
+        >
+          <ArrowCircleRight className="size-10 text-mint-green" />
+        </button>
+      )}
     </div>
   );
 }
