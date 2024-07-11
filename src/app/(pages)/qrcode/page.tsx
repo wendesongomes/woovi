@@ -15,7 +15,7 @@ export default function Qrcode() {
 
   const installmentNumber = Number(installmentParams);
 
-  if (installments[installmentNumber] === undefined || !installmentParams) {
+  if (installments[installmentNumber - 1] === undefined || !installmentParams) {
     redirect("/");
   }
 
