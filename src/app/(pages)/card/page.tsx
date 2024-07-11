@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/app/components/button";
 import { installments } from "@/lib/installments";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Check, KeyboardArrowDown } from "@mui/icons-material";
@@ -13,7 +14,6 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -43,14 +43,6 @@ export default function Card() {
 
   return (
     <div className="w-screen h-screen flex flex-col items-center px-5 overflow-x-hidden">
-      <Image
-        src={"/logo.svg"}
-        alt="logo"
-        width={100}
-        height={100}
-        className="mt-9"
-      />
-
       <div className="flex justify-center items-center flex-col gap-5 max-w-[464px] px-4">
         <p className="font-extrabold text-2xl leading-8 mt-10 text-dark-gray max-w-[421px] text-center">
           João, pague o restante em 1x no cartão
@@ -134,12 +126,7 @@ export default function Card() {
             </Select>
           </FormControl>
 
-          <button
-            type="submit"
-            className="bg-deep-blue normal-case w-full px-5 py-2 rounded text-center leading-6 text-lg font-semibold text-white"
-          >
-            Pagar
-          </button>
+          <Button>Pagar</Button>
         </form>
 
         <div className="flex flex-col text-center leading-5">
@@ -200,24 +187,6 @@ export default function Card() {
           </div>
         </div>
       </div>
-
-      <footer className="flex gap-2 justify-center items-center mt-10 mb-7">
-        <Image
-          src={"/shield.svg"}
-          alt="Ícone de segurança"
-          width={20}
-          height={20}
-        />
-        <p className="text-sm leading-4 font-semibold text-light-gray">
-          Pagamento 100% seguro via:
-        </p>
-        <Image
-          src={"/footer_logo.svg"}
-          alt="Ícone de segurança"
-          width={60}
-          height={60}
-        />
-      </footer>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/app/components/button";
 import { ArrowCircleRight, KeyboardArrowDown } from "@mui/icons-material";
 import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 import Image from "next/image";
@@ -10,14 +11,6 @@ export default function Qrcode() {
 
   return (
     <div className="w-screen h-screen flex flex-col items-center px- overflow-x-hidden">
-      <Image
-        src={"/logo.svg"}
-        alt="logo"
-        width={100}
-        height={100}
-        className="mt-9"
-      />
-
       <div className="flex justify-center items-center flex-col gap-5 max-w-[464px] px-4">
         <p className="font-extrabold text-2xl leading-8 mt-10 text-dark-gray max-w-[421px] text-center">
           João, pague a entrada de R$ 15.300,00 pelo Pix
@@ -33,10 +26,10 @@ export default function Qrcode() {
           />
         </div>
 
-        <button className="bg-deep-blue px-5 py-2 rounded flex gap-2.5 justify-between items-center leading-6 text-lg font-semibold text-white">
+        <Button>
           Clique para copiar QR CODE
           <Image src={"/copy.svg"} width={20} height={20} alt="copy" />
-        </button>
+        </Button>
 
         <div className="flex flex-col text-center leading-5">
           <p className="font-semibold text-light-gray">Prazo de pagamento:</p>
@@ -95,27 +88,9 @@ export default function Qrcode() {
         </div>
       </div>
 
-      <footer className="flex gap-2 justify-center items-center mt-10 mb-7">
-        <Image
-          src={"/shield.svg"}
-          alt="Ícone de segurança"
-          width={20}
-          height={20}
-        />
-        <p className="text-sm leading-4 font-semibold text-light-gray">
-          Pagamento 100% seguro via:
-        </p>
-        <Image
-          src={"/footer_logo.svg"}
-          alt="Ícone de segurança"
-          width={60}
-          height={60}
-        />
-      </footer>
-
       <button
         onClick={() => router.push("/card")}
-        className="absolute bottom-5 right-5 cursor-pointer"
+        className="fixed bottom-5 right-5 cursor-pointer"
       >
         <ArrowCircleRight className="size-10 text-mint-green" />
       </button>
