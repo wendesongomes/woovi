@@ -7,7 +7,7 @@ import { useState } from "react";
 import { Installments } from "../components/installments";
 
 export default function Home() {
-  const [selectedParcela, setSelectedParcela] = useState(1);
+  const [selectedInstallment, setSelectedInstallment] = useState(1);
   const router = useRouter();
 
   return (
@@ -20,8 +20,8 @@ export default function Home() {
         slice={[0, 1]}
         title="Pix"
         installments={installments}
-        selectedParcela={selectedParcela}
-        setSelectedParcela={setSelectedParcela}
+        selectedInstallment={selectedInstallment}
+        setSelectedInstallment={setSelectedInstallment}
         InstallmentsAnnunciation={1}
         AnnunciationHighlight="🤑 R$ 300,00 "
         AnnunciationText="de volta no seu Pix
@@ -32,15 +32,17 @@ export default function Home() {
         slice={1}
         installments={installments}
         title="Pix Parcelado"
-        selectedParcela={selectedParcela}
-        setSelectedParcela={setSelectedParcela}
+        selectedInstallment={selectedInstallment}
+        setSelectedInstallment={setSelectedInstallment}
         InstallmentsAnnunciation={4}
         AnnunciationHighlight="-3% de juros: "
         AnnunciationText="Melhor opção de parcelamento"
       />
 
       <button
-        onClick={() => router.push("/qrcode")}
+        onClick={() =>
+          router.push(`/qrcode?installment=${selectedInstallment}`)
+        }
         className="fixed right-5 bottom-5 cursor-pointer"
       >
         <ArrowCircleRight className="size-10 text-mint-green" />

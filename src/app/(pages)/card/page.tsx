@@ -2,6 +2,7 @@
 
 import { Button } from "@/app/components/button";
 import { installments } from "@/lib/installments";
+import { price } from "@/lib/price";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Check, KeyboardArrowDown } from "@mui/icons-material";
 import {
@@ -14,6 +15,7 @@ import {
   Select,
   TextField,
 } from "@mui/material";
+import { redirect, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -37,6 +39,13 @@ export default function Card() {
     resolver: zodResolver(zodform),
   });
 
+  const params = useSearchParams();
+  const installmentParams = params.get("installment");
+
+  if (!installmentParams) {
+    redirect("/");
+  }
+
   const onSubmit = (data: formData) => {
     console.log(data);
   };
@@ -45,7 +54,7 @@ export default function Card() {
     <div className="flex flex-col items-center px-5">
       <div className="flex justify-center items-center flex-col gap-5 max-w-[464px] px-4">
         <p className="font-extrabold text-2xl leading-8 mt-10 text-dark-gray max-w-[421px] text-center">
-          João, pague o restante em 1x no cartão
+          João, pague o restante em {installmentParams}x no cartão
         </p>
 
         <form
@@ -111,7 +120,7 @@ export default function Card() {
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               label="parcelas"
-              defaultValue={installments[1].valor}
+              defaultValue={installments[Number(installmentParams)].valor}
               {...register("valor")}
             >
               {installments.slice(1).map(({ parcela, valor }) => (
@@ -143,7 +152,9 @@ export default function Card() {
                 </span>
                 <p className="font-semibold text-lg">1ª entrada no Pix</p>
               </div>
-              <p className="font-extrabold text-lg">R$ 15.300,00</p>
+              <p className="font-extrabold text-lg">
+                {price(installments[Number(installmentParams)].valor)}
+              </p>
             </div>
 
             <span className="h-5 w-[2px] block relative bg-soft-gray left-[7px]" />
@@ -153,13 +164,22 @@ export default function Card() {
                 <span className="border-2 rounded-full border-soft-gray w-4 h-4" />
                 <p className="font-semibold text-lg">2ª no cartão</p>
               </div>
-              <p className="font-extrabold text-lg">R$ 15.300,00</p>
+              <p className="font-extrabold text-lg">
+                {" "}
+                {price(
+                  installments[Number(installmentParams) - 1].total /
+                    Number(installmentParams) -
+                    installments[Number(installmentParams) - 1].total
+                )}
+              </p>
             </div>
           </div>
 
           <div className="w-full flex justify-between items-center font-semibold leading-6 text-dark-gray py-5">
             <p className="text-sm">CET: 0,5%</p>
-            <p className="text-lg">Total: R$ 30.600,00</p>
+            <p className="text-lg">
+              Total: {price(installments[Number(installmentParams)].total)}
+            </p>
           </div>
 
           <div className="w-full p-5">

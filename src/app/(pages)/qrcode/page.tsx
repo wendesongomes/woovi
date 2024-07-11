@@ -1,19 +1,28 @@
 "use client";
 
 import { Button } from "@/app/components/button";
+import { installments } from "@/lib/installments";
+import { price } from "@/lib/price";
 import { ArrowCircleRight, KeyboardArrowDown } from "@mui/icons-material";
 import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter, useSearchParams } from "next/navigation";
 
 export default function Qrcode() {
   const router = useRouter();
+  const params = useSearchParams();
+  const installmentParams = params.get("installment");
+
+  if (!installmentParams) {
+    redirect("/");
+  }
 
   return (
-    <div className="w-screen h-screen flex flex-col items-center px- overflow-x-hidden">
+    <div className="flex flex-col items-center px- overflow-x-hidden">
       <div className="flex justify-center items-center flex-col gap-5 max-w-[464px] px-4">
         <p className="font-extrabold text-2xl leading-8 mt-10 text-dark-gray max-w-[421px] text-center">
-          João, pague a entrada de R$ 15.300,00 pelo Pix
+          João, pague a entrada de{" "}
+          {price(installments[Number(installmentParams) - 1].valor)} pelo Pix
         </p>
 
         <div className="border-2 border-mint-green rounded-[10px]">
@@ -43,7 +52,9 @@ export default function Qrcode() {
                 <span className="border-2 rounded-full border-mint-green w-4 h-4" />
                 <p className="font-semibold text-lg">1ª entrada no Pix</p>
               </div>
-              <p className="font-extrabold text-lg">R$ 15.300,00</p>
+              <p className="font-extrabold text-lg">
+                {price(installments[Number(installmentParams) - 1].valor)}
+              </p>
             </div>
 
             <span className="h-5 w-[2px] block relative bg-soft-gray left-[7px]" />
@@ -53,13 +64,21 @@ export default function Qrcode() {
                 <span className="border-2 rounded-full border-soft-gray w-4 h-4" />
                 <p className="font-semibold text-lg">2ª no cartão</p>
               </div>
-              <p className="font-extrabold text-lg">R$ 15.300,00</p>
+              <p className="font-extrabold text-lg">
+                {price(
+                  installments[Number(installmentParams) - 1].total /
+                    Number(installmentParams) -
+                    installments[Number(installmentParams) - 1].total
+                )}
+              </p>
             </div>
           </div>
 
           <div className="w-full flex justify-between items-center font-semibold leading-6 text-dark-gray py-5">
             <p className="text-sm">CET: 0,5%</p>
-            <p className="text-lg">Total: R$ 30.600,00</p>
+            <p className="text-lg">
+              Total: {price(installments[Number(installmentParams) - 1].total)}
+            </p>
           </div>
 
           <div className="w-full p-5">
@@ -89,7 +108,7 @@ export default function Qrcode() {
       </div>
 
       <button
-        onClick={() => router.push("/card")}
+        onClick={() => router.push(`/card?installment=${installmentParams}`)}
         className="fixed bottom-5 right-5 cursor-pointer"
       >
         <ArrowCircleRight className="size-10 text-mint-green" />

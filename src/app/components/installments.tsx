@@ -3,8 +3,8 @@ import { Checkbox } from "@mui/material";
 import { AnnunciationBadge } from "./annunciation-badge";
 
 interface InstallmentsProps {
-  selectedParcela: number;
-  setSelectedParcela: (parcela: number) => void;
+  selectedInstallment: number;
+  setSelectedInstallment: (parcela: number) => void;
   slice: number | [number, number];
   title: string;
 
@@ -20,7 +20,9 @@ interface InstallmentsProps {
 }
 export function Installments(props: InstallmentsProps) {
   const handleCheckboxChange = (parcela: number) => {
-    props.setSelectedParcela(parcela === props.selectedParcela ? 1 : parcela);
+    props.setSelectedInstallment(
+      parcela === props.selectedInstallment ? 1 : parcela
+    );
   };
 
   const sliceParams = Array.isArray(props.slice) ? props.slice : [props.slice];
@@ -35,15 +37,15 @@ export function Installments(props: InstallmentsProps) {
           .slice(...sliceParams)
           .map(({ parcela, valor, total }) => (
             <div
-              onClick={() => props.setSelectedParcela(parcela)}
+              onClick={() => props.setSelectedInstallment(parcela)}
               key={parcela}
               className={`px-[21px] py-5 first:border-t-2 border-y-2 cursor-pointer last:border-b-2 border-x-2 first:rounded-t-[10px] last:rounded-b-[10px] ${
-                parcela === props.selectedParcela
+                parcela === props.selectedInstallment
                   ? "border-mint-green bg-mint-green/5 border-b-2"
                   : "border-soft-gray border-t-0"
               } 
           ${
-            parcela > props.selectedParcela
+            parcela > props.selectedInstallment
               ? "border-t-0"
               : "border-b-0 border-t-2"
           }
@@ -63,7 +65,7 @@ export function Installments(props: InstallmentsProps) {
 
                 <Checkbox
                   name="parcela"
-                  checked={props.selectedParcela === parcela}
+                  checked={props.selectedInstallment === parcela}
                   onChange={() => handleCheckboxChange(parcela)}
                   icon={<RadioButtonUnchecked className="text-soft-gray" />}
                   checkedIcon={<CheckCircle className="text-mint-green" />}
