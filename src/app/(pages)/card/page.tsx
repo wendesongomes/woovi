@@ -43,7 +43,7 @@ export default function Card() {
   const installmentParams = params.get("installment");
   const installmentNumber = Number(installmentParams);
 
-  if (installments[installmentNumber] === undefined) {
+  if (installments[installmentNumber] === undefined || !installmentParams) {
     redirect("/");
   }
 
