@@ -64,6 +64,7 @@ export function Installments(props: InstallmentsProps) {
                 </p>
 
                 <Checkbox
+                  disabled
                   name="parcela"
                   checked={props.selectedInstallment === parcela}
                   onChange={() => handleCheckboxChange(parcela)}
