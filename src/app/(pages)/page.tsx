@@ -11,7 +11,7 @@ export default function Home() {
   const router = useRouter();
 
   return (
-    <div className="w-screen h-screen flex flex-col items-center px-5 overflow-x-hidden">
+    <div className="flex flex-col items-center px-5">
       <p className="font-extrabold text-2xl mt-10 text-dak mb-8">
         João, como você quer pagar?
       </p>

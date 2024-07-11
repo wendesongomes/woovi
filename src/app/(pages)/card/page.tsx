@@ -42,7 +42,7 @@ export default function Card() {
   };
 
   return (
-    <div className="w-screen h-screen flex flex-col items-center px-5 overflow-x-hidden">
+    <div className="flex flex-col items-center px-5">
       <div className="flex justify-center items-center flex-col gap-5 max-w-[464px] px-4">
         <p className="font-extrabold text-2xl leading-8 mt-10 text-dark-gray max-w-[421px] text-center">
           João, pague o restante em 1x no cartão
