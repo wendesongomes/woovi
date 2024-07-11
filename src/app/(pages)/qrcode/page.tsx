@@ -17,12 +17,14 @@ export default function Qrcode() {
     redirect("/");
   }
 
+  const installmentNumber = Number(installmentParams);
+
   return (
     <div className="flex flex-col items-center px-5">
       <div className="flex justify-center items-center flex-col gap-5 max-w-[464px] px-4">
         <p className="font-extrabold text-2xl leading-8 mt-10 text-dark-gray max-w-[421px] text-center">
           João, pague a entrada de{" "}
-          {price(installments[Number(installmentParams) - 1].valor)} pelo Pix
+          {price(installments[installmentNumber - 1].valor)} pelo Pix
         </p>
 
         <div className="border-2 border-mint-green rounded-[10px]">
@@ -53,7 +55,7 @@ export default function Qrcode() {
                 <p className="font-semibold text-lg">1ª entrada no Pix</p>
               </div>
               <p className="font-extrabold text-lg">
-                {price(installments[Number(installmentParams) - 1].valor)}
+                {price(installments[installmentNumber - 1].valor)}
               </p>
             </div>
 
@@ -66,9 +68,9 @@ export default function Qrcode() {
               </div>
               <p className="font-extrabold text-lg">
                 {price(
-                  installments[Number(installmentParams) - 1].total /
-                    Number(installmentParams) -
-                    installments[Number(installmentParams) - 1].total
+                  installments[installmentNumber - 1].total /
+                    installmentNumber -
+                    installments[installmentNumber - 1].total
                 )}
               </p>
             </div>
@@ -77,7 +79,7 @@ export default function Qrcode() {
           <div className="w-full flex justify-between items-center font-semibold leading-6 text-dark-gray py-5">
             <p className="text-sm">CET: 0,5%</p>
             <p className="text-lg">
-              Total: {price(installments[Number(installmentParams) - 1].total)}
+              Total: {price(installments[installmentNumber - 1].total)}
             </p>
           </div>
 

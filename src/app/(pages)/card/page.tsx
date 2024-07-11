@@ -46,6 +46,8 @@ export default function Card() {
     redirect("/");
   }
 
+  const installmentNumber = Number(installmentParams);
+
   const onSubmit = (data: formData) => {
     console.log(data);
   };
@@ -54,7 +56,7 @@ export default function Card() {
     <div className="flex flex-col items-center px-5">
       <div className="flex justify-center items-center flex-col gap-5 max-w-[464px] px-4">
         <p className="font-extrabold text-2xl leading-8 mt-10 text-dark-gray max-w-[421px] text-center">
-          João, pague o restante em {installmentParams}x no cartão
+          João, pague o restante em {installmentNumber - 1}x no cartão
         </p>
 
         <form
@@ -120,16 +122,16 @@ export default function Card() {
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               label="parcelas"
-              defaultValue={installments[Number(installmentParams) - 2].valor}
+              defaultValue={installments[installmentNumber - 2].valor}
               {...register("valor")}
             >
               {installments.slice().map(({ parcela, valor }) => (
                 <MenuItem key={parcela} value={valor}>
                   {parcela}x de R${" "}
                   {price(
-                    (installments[Number(installmentParams) - 1].total /
-                      Number(installmentParams) -
-                      installments[Number(installmentParams) - 1].total) /
+                    (installments[installmentNumber - 1].total /
+                      installmentNumber -
+                      installments[installmentNumber - 1].total) /
                       parcela
                   )}
                 </MenuItem>
@@ -155,7 +157,7 @@ export default function Card() {
                 <p className="font-semibold text-lg">1ª entrada no Pix</p>
               </div>
               <p className="font-extrabold text-lg">
-                {price(installments[Number(installmentParams) - 1].valor)}
+                {price(installments[installmentNumber - 1].valor)}
               </p>
             </div>
 
@@ -169,9 +171,9 @@ export default function Card() {
               <p className="font-extrabold text-lg">
                 {" "}
                 {price(
-                  installments[Number(installmentParams) - 1].total /
-                    Number(installmentParams) -
-                    installments[Number(installmentParams) - 1].total
+                  installments[installmentNumber - 1].total /
+                    installmentNumber -
+                    installments[installmentNumber - 1].total
                 )}
               </p>
             </div>
@@ -180,7 +182,7 @@ export default function Card() {
           <div className="w-full flex justify-between items-center font-semibold leading-6 text-dark-gray py-5">
             <p className="text-sm">CET: 0,5%</p>
             <p className="text-lg">
-              Total: {price(installments[Number(installmentParams) - 1].total)}
+              Total: {price(installments[installmentNumber - 1].total)}
             </p>
           </div>
 
