@@ -120,16 +120,18 @@ export default function Card() {
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               label="parcelas"
-              defaultValue={installments[Number(installmentParams)].valor}
+              defaultValue={installments[Number(installmentParams) - 2].valor}
               {...register("valor")}
             >
-              {installments.slice(1).map(({ parcela, valor }) => (
+              {installments.slice().map(({ parcela, valor }) => (
                 <MenuItem key={parcela} value={valor}>
-                  {parcela - 1}x de R${" "}
-                  {Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "BRL",
-                  }).format(valor)}
+                  {parcela}x de R${" "}
+                  {price(
+                    (installments[Number(installmentParams) - 1].total /
+                      Number(installmentParams) -
+                      installments[Number(installmentParams) - 1].total) /
+                      parcela
+                  )}
                 </MenuItem>
               ))}
             </Select>
@@ -153,7 +155,7 @@ export default function Card() {
                 <p className="font-semibold text-lg">1ª entrada no Pix</p>
               </div>
               <p className="font-extrabold text-lg">
-                {price(installments[Number(installmentParams)].valor)}
+                {price(installments[Number(installmentParams) - 1].valor)}
               </p>
             </div>
 
